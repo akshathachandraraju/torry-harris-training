@@ -1,3 +1,4 @@
+SQL Task-1 (15/09/2021)
 create table regions(region_id int not null primary key,region_name varchar(50));
 create table countries(country_id varchar(20) not null primary key,country_name varchar(50),region_id int not null);
 create table locations(location_id int primary key,street_address varchar(50),postal_code varchar(20) ,city varchar(50) not null,state_province varchar(50),country_id varchar(20) not null);
