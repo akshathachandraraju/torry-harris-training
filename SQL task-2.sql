@@ -47,7 +47,7 @@ select empname from emplyoee1 where job in ("analyst","clerk","salesman");
 select empname from emplyoee1 where job not  in ("analyst","clerk","salesman");
 select empname from emplyoee1 where comm is null;
 select empname from emplyoee1 where comm is null or comm<100;
-select empname,(sal + isnull(comm,0)) as netsal from emplyoee1   ;
+select empname,sal*12+250 as netsal from emplyoee1   ;
 select empname, (sal+comm) as totalearn from emplyoee1 where (sal+comm)>2000;
 select empname from emplyoee1 where empname like "m%" or "%m";
 select empname from emplyoee1 where empname like "%m%" ;
