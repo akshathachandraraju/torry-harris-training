@@ -36,8 +36,6 @@ select empname,job,sal from emplyoee1 where deptno=20 and sal>2000;
 select job,empname from emplyoee1 where job="salesman" and deptno=30 and sal>1500;
 select * from emplyoee1 where job="manager" or job="president";
 select * from emplyoee1 where deptno not in(30) and job="manager";
-select * from emplyoee1 where job in ("clerk","manager") and  deptno=10;
-select * from emplyoee1 where job in ("clerk","manager") and deptno=20;
 select * from emplyoee1 where job="manager" or job ="clerk" and deptno=20   ;
 select * from emplyoee1 where job ="manager" and deptno=10 or job="clerk" and deptno=20  ;
 select * from emplyoee1 where job not in ("clerk","manager") and  sal>=2000;
