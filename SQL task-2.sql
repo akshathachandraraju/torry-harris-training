@@ -67,6 +67,9 @@ select replace(empname,'a','A') from emplyoee1 ;
 select empname from emplyoee1 where empname like "%ar%";
 select empname,round(sal,-3)  from emplyoee1 where round(sal,-3)=1000;
 select empname,round(sal)  from emplyoee1 where round(sal)<1000;
+select empname,case
+when hiredate<current_date()
+then hiredate + interval 3 year end as service from emplyoee1  ;
 select empname,timestampdiff(day,hiredate,current_date()) as days from emplyoee1;
 select empname,timestampdiff(month,hiredate,current_date()) as months from emplyoee1;
 select * from emplyoee1 order by empname asc;
