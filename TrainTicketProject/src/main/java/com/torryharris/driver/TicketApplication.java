@@ -1,5 +1,6 @@
 package com.torryharris.driver;
 
+import com.torryharris.model.Ticket;
 import com.torryharris.model.Train;
 import com.torryharris.model.TrainDAO;
 
@@ -12,16 +13,21 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class TicketApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner sc=new Scanner(System.in);
-        System.out.println("Enter Train Number:\n");
-        int train_no=sc.nextInt();
-        System.out.println("Enter travel Date:\n");
-        
-        System.out.println("Enter No of Passenger:\n");
-        int p_no=sc.nextInt();
-        System.out.println("Enter the Passenger Name:\n ");
-        String p_name=sc.next();
+        System.out.println("Enter train No:");
+        int trainNo=sc.nextInt();
+        TrainDAO trainDAO=new TrainDAO();
+        Train train=new Train();
+        try {
+            train = trainDAO.findTrainNo(trainNo);
+        }catch(Exception e){
+            System.out.println(e);
+       }
+        System.out.println("Enter Travel Date:");
+        String travelDate=sc.next();
+        /*Ticket ticket=new Ticket();
+        System.out.println(ticket.generatePNR());*/
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/traindb";

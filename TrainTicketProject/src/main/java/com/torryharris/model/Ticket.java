@@ -1,31 +1,35 @@
 package com.torryharris.model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
+import java.util.TreeMap;
 
 public class Ticket {
-    private int counter;
+    public static int counter=100;
     private String pnr;
-    private Date travel_date;
+    private String travel_date;
     private Train train;
-    private Passenger passenger;
+    private TreeMap<Passenger,Integer>passengerTreeMap=new TreeMap<>();
 
     public Ticket() {
     }
 
-    public Ticket(int counter, String pnr, Date travel_date, Train train,Passenger passenger) {
-        this.counter = counter;
+    public Ticket(String pnr, String travel_date, Train train, TreeMap<Passenger, Integer> passengerTreeMap) {
         this.pnr = pnr;
         this.travel_date = travel_date;
         this.train = train;
-        this.passenger=passenger;
+        this.passengerTreeMap = passengerTreeMap;
     }
 
-    public Passenger getPassenger() {
-        return passenger;
+    public TreeMap<Passenger, Integer> getPassengerTreeMap() {
+        return passengerTreeMap;
     }
 
-    public void setPassenger(Passenger passenger) {
-        this.passenger = passenger;
+    public void setPassengerTreeMap(TreeMap<Passenger, Integer> passengerTreeMap) {
+        this.passengerTreeMap = passengerTreeMap;
     }
 
     public int getCounter() {
@@ -44,11 +48,11 @@ public class Ticket {
         this.pnr = pnr;
     }
 
-    public Date getTravel_date() {
+    public String getTravel_date() {
         return travel_date;
     }
 
-    public void setTravel_date(Date travel_date) {
+    public void setTravel_date(String travel_date) {
         this.travel_date = travel_date;
     }
 
@@ -59,22 +63,65 @@ public class Ticket {
     public void setTrain(Train train) {
         this.train = train;
     }
-    private void generatePNR(){
-    }
-    private void calcPassengerFair(Passenger passenger){
 
+    //methods
+    public String generatePNR(){
+        this. pnr= this.getTrain().getDestination().charAt(0)+this.getTrain().getSource().charAt(0)+"_"+this.getTravel_date()+"_"+counter;
+        counter++;
+        System.out.println(this.pnr);
+        return (String.valueOf(this.pnr));
     }
-    public void addPassenger(Passenger passenger){
-
+    private double calcPassengerFair(Passenger passenger) {
+        double fare = train.getTicket_price();
+        if (passenger.getAge() <= 12) {
+            fare=fare/2;
+        } else if (passenger.getAge() >= 60) {
+            fare=fare*(60/100);
+        } else if (passenger.getGender() == 'F') {
+            fare=fare*(25/100);
+        }
+        return fare;
     }
-    public void calculateTotalTicketPrice(){
-
+    public void addPassenger(String name,char gender,int age){
+        Passenger passenger=new Passenger(name,gender,age);
+        double fare=calcPassengerFair(passenger);
+        passengerTreeMap.put(passenger,(int)fare);
     }
-    private void generateTicket(){
-
+    public double calculateTotalTicketPrice(){
+        int sum=0;
+        for(Passenger passenger:passengerTreeMap.keySet()){
+            sum=sum+passengerTreeMap.get(passenger);
+        }
+        return sum;
     }
-    public void writeTicket(){
+    private StringBuilder generateTicket(){
+        Passenger passenger=new Passenger();
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder.append("PNR:"+generatePNR());
+        stringBuilder.append("Train No:"+getTrain().getTrain_no());
+        stringBuilder.append("Train Name:"+getTrain().getTrain_name());
+        stringBuilder.append("From:"+getTrain().getSource());
+        stringBuilder.append("To:"+getTrain().getDestination());
+        stringBuilder.append("Travel Date:"+getTravel_date());
+        stringBuilder.append("\n");
+        stringBuilder.append("Passengers:");
+        stringBuilder.append("Name"+passenger.getName()+"\t"+"Age"+passenger.getAge()+"\t"+"Gender"+passenger.getGender()+"\t"+"Fare"+this.calcPassengerFair(passenger)+"\n");
+        stringBuilder.append("Total Price:"+calculateTotalTicketPrice());
+        return stringBuilder;
+    }
+    public void writeTicket() throws IOException {
+        FileInputStream fis = new FileInputStream(generatePNR()+" "+".txt");
+        System.out.println("Ticket Details:");
+        int ch;
+        while ((ch = fis.read()) != -1)
+            System.out.print((char) ch);
+        fis.close();
 
+        FileOutputStream fos=new FileOutputStream(generatePNR()+" "+".txt");
+        StringBuilder str=this.generateTicket();
+        fos.write( str);
+        fos.close();
+        System.out.println("\nTicket Generated ");
     }
 
 }
