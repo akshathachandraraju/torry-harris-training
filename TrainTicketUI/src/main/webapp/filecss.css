@@ -1,0 +1,30 @@
+body {
+
+  background-color: white;
+  background-image:
+}
+
+html{
+font-family:verdana;}
+
+h3 {
+  color: navy;
+  margin-left: 20px;
+}
+
+marquee {
+
+color:navy;
+}
+
+#submit,#reset {
+background-color:#4CAF50;
+padding:12px,18px
+color:white;
+}
+
+form{
+width:30%;
+height:50%;
+background-color:#72aee6;
+}
