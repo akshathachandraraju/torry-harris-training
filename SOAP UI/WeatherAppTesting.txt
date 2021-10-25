@@ -1,0 +1,32 @@
+
+Test Cases for Weather app
+Test case-1:
+       Name: Check for givien cornerpoints places
+       Expected o/p: longitude and latitude for the given place
+       Actual o/p: longitude and latitude for the given place
+Test case-2:
+     Name: Check for Non-US places
+     Expected o/p: longitude and latitude for the given place
+     Actual o/p: 500 server error
+Test case-3:
+     Name: Check for pincode of the places
+    Expected o/p: longitude and latitude for the given place
+     Actual o/p: 500 server error
+
+Defects found:
+1.Defect-1:
+     Test case-2
+     Name: Check for Non-US places
+     Expected o/p: longitude and latitude for the given place
+     Actual o/p: 500 server error
+     Description: It works only for the given list of places.While entering other places it's giving     500 server error.
+2.Defect-2:
+      Test case-3
+      Name: Check for pincode of the places
+      Expected o/p: longitude and latitude for the given place
+      Actual o/p: 500 server error
+      Description:While entering the given places pincode getting 500 server error.
+
+
+     
+   
